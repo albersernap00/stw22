@@ -4,7 +4,10 @@
     Author     : Alberto
 --%>
 
+<%@page import="stw22.db.PreciosLuzDAO"%>
+<%@page import="javax.ejb.EJB"%>
 <%@page import="REST.client.LuzClienteRest"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,13 +18,9 @@
     <body>
         <h1>Hello Worldmtyty!</h1>
         
-        <%
-            LuzClienteRest client = new LuzClienteRest();
-            String prueba = client.getAllPrices(String.class);
-            client.close();
-        %>
         
-        <h1><%=prueba%></h1>
+        
+        <!--<h1><%=//prueba%></h1>-->
 
     </body>
 </html>
