@@ -33,7 +33,7 @@ public class Arrancador {
     @PostConstruct
     public void init(){
         gson = new Gson();
-        timer.obtenerPrecioLuz();
+        //timer.obtenerPrecioLuz();
         //crearServicio(NOMBRE_SERVICIO, StatusCode.BOOTING, getIp());
         System.out.println("====== LA IP ES ");
         //Stockk_Services_Directory clientService = new Stockk_Services_Directory();

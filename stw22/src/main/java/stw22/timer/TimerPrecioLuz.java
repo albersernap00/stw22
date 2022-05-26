@@ -32,7 +32,7 @@ public class TimerPrecioLuz {
     
     @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*", second = "1", persistent = false)
     public void timer(){
-        obtenerPrecioLuz();
+        //obtenerPrecioLuz();
         System.out.println("[!] joder");
     }
     
@@ -70,8 +70,8 @@ public class TimerPrecioLuz {
         precioAdd.setUnidades("€/MWh");
                         
         System.out.println("lista 0 " + lista.get(0).getPrice());
-        System.out.println(preciosDB.findAll());
-        //preciosDB.create(precioAdd);
+        //System.out.println(preciosDB.findAll());
+        preciosDB.create(precioAdd);
               
         /*Iterator<String> keys = json.keys();
         

@@ -4,9 +4,6 @@
     Author     : Alberto
 --%>
 
-<%@page import="stw22.db.PreciosLuzDAO"%>
-<%@page import="javax.ejb.EJB"%>
-<%@page import="REST.client.LuzClienteRest"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,10 +14,14 @@
     </head>
     <body>
         <h1>Hello Worldmtyty!</h1>
+        <form action="listarPrecios">
+            <input type="submit">
+        </form>
+        <form action="addPreciosLuz">
+            <input type="submit">
+        </form>
         
-        
-        
-        <!--<h1><%=//prueba%></h1>-->
+                
 
     </body>
 </html>
