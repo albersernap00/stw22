@@ -1,0 +1,3 @@
+create-jdbc-connection-pool --datasourceclassname org.h2.jdbcx.JdbcDataSource --restype javax.sql.DataSource --property User=${ENV=USERNAME}:password=${ENV=PASSWORD}:URL=jdbc\:h2\:/${ENV=DB_DIR}/fichero:AutoServer=true stw22
+
+create-jdbc-resource --connectionpoolid stw22 jdbc/stw22

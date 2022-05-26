@@ -1,0 +1,6 @@
+2022-05-26 10:31:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRECIOSLUZ" not found; SQL statement:
+SELECT 1 FROM PRECIOSLUZ [42102-200]
+2022-05-26 10:31:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SEQUENCE" not found; SQL statement:
+SELECT 1 FROM SEQUENCE [42102-200]
