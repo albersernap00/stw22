@@ -5,8 +5,10 @@
  */
 package stw22.servelt;
 
+import REST.client.LoginRESTClient;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,13 +43,23 @@ public class AddUsuario extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet AddUsuario</title>"); 
+            LoginRESTClient client = new LoginRESTClient();
             Usuario usuario = new Usuario();
-            usuario.setNombreUsuario("rober");
+            usuario.setNombreUsuario("alberto");
             usuario.setPassword("rober");
-            usuarioDB.create(usuario);
+            client.registerUser(usuario);
+            client.close();
+            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddUsuario at " + usuarioDB.findAll().get(0).toString() + "</h1>");
+            List<Usuario> listaUsuarios = usuarioDB.findAll();
+            String cadena = "";
+            for (int i = 0; i < listaUsuarios.size(); i++) {
+                cadena += listaUsuarios.get(i).toString();
+                //usuarioDB.remove(listaUsuarios.get(i));
+                
+            }
+            out.println("<h1>Servlet AddUsuario at " + usuarioDB.findAll().size() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

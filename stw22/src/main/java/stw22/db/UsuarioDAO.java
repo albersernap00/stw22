@@ -8,6 +8,7 @@ package stw22.db;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -24,6 +25,22 @@ public class UsuarioDAO extends AbstractFacade<Usuario> {
         return em;
     }
     
+    public Usuario checkAutenticacion (String _login, String _pwd){
+        Usuario usuario = null;
+        System.out.println("Los params que me llegan son " + _login + " y " + _pwd);
+        Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario=:login AND u.password=:pwd");
+        query.setParameter("login", _login);
+        query.setParameter("pwd", _pwd);
+
+        try{
+            usuario = (Usuario) query.getSingleResult();
+            System.out.println("usuario es: " + usuario.toString());
+        }catch(Exception e){
+            System.out.println("ha habido una buena ecepcion " + e.getMessage());
+        }
+
+        return usuario;
+    }
 
     public UsuarioDAO() {
         super(Usuario.class);

@@ -35,7 +35,7 @@ public class AddPreciosLuz extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            timer.obtenerPrecioLuz(); 
+            timer.obtenerPrecioLuz();             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
