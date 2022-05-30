@@ -66,7 +66,7 @@ public class TimerPrecioLuz {
         PreciosLuz precioAdd = new PreciosLuz();
         precioAdd.setPrecio(2.0);
         precioAdd.setFecha(new Date(2010,10,10));
-        precioAdd.setHora("hora");
+        precioAdd.setHora("12:20");
         precioAdd.setUnidades("€/MWh");
                         
         System.out.println("lista 0 " + lista.get(0).getPrice());

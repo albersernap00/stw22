@@ -6,7 +6,6 @@
 package stw22.db;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,27 +16,22 @@ import javax.persistence.Id;
  * @author rober
  */
 @Entity
-public class PreciosLuz implements Serializable {
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date fecha;
-    private double precio;
-    private String hora;
-    private String unidades;
-
+    private String nombreUsuario;
+    private String password;
     
     public Long getId() {
         return id;
-        
     }
 
     public void setId(Long id) {
         this.id = id;
     }
-    
 
     @Override
     public int hashCode() {
@@ -46,46 +40,31 @@ public class PreciosLuz implements Serializable {
         return hash;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public double getPrecio() {
-        return precio;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
-    }
-
-    public String getUnidades() {
-        return unidades;
-    }
-
-    public void setUnidades(String unidades) {
-        this.unidades = unidades;
-    }
+    
     
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PreciosLuz)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        PreciosLuz other = (PreciosLuz) object;
+        Usuario other = (Usuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +73,7 @@ public class PreciosLuz implements Serializable {
 
     @Override
     public String toString() {
-        return "PreciosLuz[ id=" + id +  "hora: " + hora + " precio " + precio + " ]";
+        return "Usuario: " + nombreUsuario + " password " + password;
     }
     
 }

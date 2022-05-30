@@ -41,9 +41,9 @@ public class ListarPrecios extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet ListarPrecios</title>");            
-            out.println("</head>");
+            out.println("</head>"); 
             out.println("<body>");
-            out.println("<h1>Servlet ListarPrecios at " + preciosDB.findAll() + "</h1>");
+            out.println("<h1>Servlet ListarPrecios at " + preciosDB.findAll().get(0).toString() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

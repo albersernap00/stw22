@@ -13,15 +13,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import stw22.timer.TimerPrecioLuz;
+import stw22.db.Usuario;
+import stw22.db.UsuarioDAO;
 
 /**
  *
  * @author rober
  */
-@WebServlet(name = "addPreciosLuz", urlPatterns = {"/addPreciosLuz"})
-public class AddPreciosLuz extends HttpServlet {
-    @EJB TimerPrecioLuz timer;
+@WebServlet(name = "addUsuario", urlPatterns = {"/addUsuario"})
+public class AddUsuario extends HttpServlet {
+    @EJB UsuarioDAO usuarioDB;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -35,14 +37,17 @@ public class AddPreciosLuz extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            timer.obtenerPrecioLuz(); 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddPreciosLuz</title>");            
+            out.println("<title>Servlet AddUsuario</title>"); 
+            Usuario usuario = new Usuario();
+            usuario.setNombreUsuario("rober");
+            usuario.setPassword("rober");
+            usuarioDB.create(usuario);
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddPreciosLuz at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddUsuario at " + usuarioDB.findAll().get(0).toString() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

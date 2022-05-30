@@ -15,10 +15,13 @@
     <body>
         <h1>Hello Worldmtyty!</h1>
         <form action="listarPrecios">
-            <input type="submit">
+            <input type="submit" value="Listar">
         </form>
         <form action="addPreciosLuz">
-            <input type="submit">
+            <input type="submit" value="Añadir precio">
+        </form>
+        <form action="addUsuario">
+            <input type="submit" value="Añadir Usuario">
         </form>
         
                 
