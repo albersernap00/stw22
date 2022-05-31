@@ -5,6 +5,7 @@
  */
 package stw22.db;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,6 +41,21 @@ public class UsuarioDAO extends AbstractFacade<Usuario> {
         }
 
         return usuario;
+    }
+    
+    public void createIfNotExists(Usuario entity){
+        List<Usuario> lista = findAll();
+        boolean existeUsuario = false;
+        for (Usuario user: lista) {
+            if (user.getNombreUsuario().equals(entity.getNombreUsuario())){
+                existeUsuario = true;
+            }
+        }
+        
+        if (!existeUsuario){
+            super.create(entity);
+        }
+        
     }
 
     public UsuarioDAO() {

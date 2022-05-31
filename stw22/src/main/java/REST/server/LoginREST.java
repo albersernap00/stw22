@@ -62,7 +62,8 @@ public class LoginREST {
     @POST    
     @Consumes(MediaType.APPLICATION_JSON)
     public void registerUser(Usuario _user) {
-        usuarioDB.create(_user);        
+        usuarioDB.createIfNotExists(_user);        
+        
     }
     
     

@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
@@ -23,7 +25,6 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     @Column(unique=true)
     private String nombreUsuario;
     private String password;
@@ -76,7 +77,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario: " + nombreUsuario + " password " + password;
+        return "stw22.db.Usuario[ id=" + id + " ]";
     }
     
 }
