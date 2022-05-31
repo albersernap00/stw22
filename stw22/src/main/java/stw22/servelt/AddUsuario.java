@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import stw22.db.Usuario;
 import stw22.db.UsuarioDAO;
 
@@ -23,8 +24,7 @@ import stw22.db.UsuarioDAO;
  * @author rober
  */
 @WebServlet(name = "addUsuario", urlPatterns = {"/addUsuario"})
-public class AddUsuario extends HttpServlet {
-    @EJB UsuarioDAO usuarioDB;
+public class AddUsuario extends HttpServlet {    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,8 +38,25 @@ public class AddUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String login    = request.getParameter("username");
+        String username    = request.getParameter("username");
         String pwd      = request.getParameter("pwd");
+        Usuario usuario = new Usuario();
+        usuario.setNombreUsuario(username);
+        usuario.setPassword(pwd);
+        
+        LoginRESTClient client = new LoginRESTClient();
+        String status = client.registerUser(usuario);
+        client.close();
+        HttpSession session = request.getSession();
+        if (status.equals("201")){            
+            session.setAttribute("username", usuario.getNombreUsuario());
+            session.setAttribute("msg", null);
+            response.sendRedirect("index.jsp");
+        }else{
+            session.setAttribute("msg", "Nombre de usuario ya existe");
+            response.sendRedirect("addUsuario.jsp");
+        }
+        
         
         
         

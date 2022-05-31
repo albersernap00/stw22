@@ -5,8 +5,8 @@
  */
 package stw22.servelt;
 
+import REST.client.LoginRESTClient;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,8 +23,7 @@ import stw22.db.UsuarioDAO;
  */
 @WebServlet(name = "Login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
-
-    @EJB UsuarioDAO usuarioDB;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,18 +41,19 @@ public class Login extends HttpServlet {
         
         String username = request.getParameter("username");
         String pwd      = request.getParameter("pwd");
-       
-        Usuario user = usuarioDB.checkAutenticacion(username, pwd);
+               
+        LoginRESTClient client = new LoginRESTClient();        
         
-        if (user!=null){
-            session.setAttribute("username", user.getNombreUsuario());
+        if (client.loginOK(username, pwd).equals("OK")){
+            session.setAttribute("username", username);
             session.setAttribute("msg", null);
-            response.sendRedirect(response.encodeURL("menuPpal.jsp"));
+            response.sendRedirect(response.encodeURL("index.jsp"));
         }else{
             session.setAttribute("username", null);
             session.setAttribute("msg", "ERROR en la autenticación.");
             response.sendRedirect(response.encodeURL("login.jsp"));
         }
+        client.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -50,9 +50,9 @@ public class LoginREST {
     public String loginOK(@PathParam ("username") String _username, @PathParam ("password") String _password ) {
         Usuario existeUsuario = usuarioDB.checkAutenticacion(_username, _password);        
         if (existeUsuario != null){
-            return "{\"login\":\"OK\"}";
+            return "OK";
         }else{
-            return "{\"login\":\"NOK\"}";
+            return "NOK";
         }
     }
     
@@ -61,8 +61,12 @@ public class LoginREST {
     
     @POST    
     @Consumes(MediaType.APPLICATION_JSON)
-    public void registerUser(Usuario _user) {
-        usuarioDB.createIfNotExists(_user);        
+    public String registerUser(Usuario _user) {
+        if (usuarioDB.createIfNotExists(_user)){
+            return "201";
+        }else{
+            return "409";
+        }
         
     }
     

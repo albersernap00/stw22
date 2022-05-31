@@ -7,13 +7,15 @@ package stw22.servelt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import stw22.db.PreciosLuzDAO;
+import stw22.db.PrecioLuz;
+import stw22.db.PrecioLuzDAO;
 import stw22.timer.TimerPrecioLuz;
 
 /**
@@ -22,7 +24,7 @@ import stw22.timer.TimerPrecioLuz;
  */
 @WebServlet(name = "listarPrecios", urlPatterns = {"/listarPrecios"})
 public class ListarPrecios extends HttpServlet {
-    @EJB PreciosLuzDAO preciosDB;
+    @EJB PrecioLuzDAO preciosDB;
     @EJB TimerPrecioLuz timer;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -43,7 +45,14 @@ public class ListarPrecios extends HttpServlet {
             out.println("<title>Servlet ListarPrecios</title>");            
             out.println("</head>"); 
             out.println("<body>");
-            out.println("<h1>Servlet ListarPrecios at " + preciosDB.findAll().get(0).toString() + "</h1>");
+            List<PrecioLuz> lista = preciosDB.findAll();
+            if (lista != null){
+                for(PrecioLuz precio: lista){
+                    out.println("<h3>" + precio.toString() + "</h3>");
+                }
+            }
+           
+            out.println("<h1>Servlet ListarPrecios at " + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

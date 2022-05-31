@@ -18,7 +18,7 @@
         <br><br>
         
         <legend>Crear Usuario</legend>
-
+        <div style="background-color: red; color:white; font-size: 16px;">${msg}</div>
         <form method="POST" action="<%=response.encodeURL("addUsuario")%>">
             <table>
                 <tr>

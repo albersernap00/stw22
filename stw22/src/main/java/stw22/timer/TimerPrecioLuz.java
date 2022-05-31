@@ -5,19 +5,23 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.StringReader;
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import stw22.db.PreciosLuz;
-import stw22.db.PreciosLuzDAO;
+import stw22.db.PrecioLuz;
+import stw22.db.PrecioLuzDAO;
 import stw22.serializable.PrecioLuzJSON;
 
 /**
@@ -28,11 +32,11 @@ import stw22.serializable.PrecioLuzJSON;
 
 public class TimerPrecioLuz {
     
-    @EJB PreciosLuzDAO preciosDB;
+    @EJB PrecioLuzDAO preciosDB;
     
-    @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*", second = "1", persistent = false)
+    @Schedule(dayOfWeek = "*", month = "*", hour = "9", dayOfMonth = "*", year = "*", minute = "0", second = "0", persistent = false)
     public void timer(){
-        //obtenerPrecioLuz();
+        obtenerPrecioLuz();
         System.out.println("[!] joder");
     }
     
@@ -58,29 +62,25 @@ public class TimerPrecioLuz {
         List <PrecioLuzJSON> lista = new ArrayList<>();
         
         object.forEach((key, value) -> {
-            System.out.println("[dd] " + value);         
-            
-            lista.add(Arrancador.gson.fromJson( value.toString(), PrecioLuzJSON.class));
-            
-        });
-        PreciosLuz precioAdd = new PreciosLuz();
-        precioAdd.setPrecio(2.0);
-        precioAdd.setFecha(new Date(2010,10,10));
-        precioAdd.setHora("12:20");
-        precioAdd.setUnidades("€/MWh");
-                        
-        System.out.println("lista 0 " + lista.get(0).getPrice());
-        //System.out.println(preciosDB.findAll());
-        preciosDB.create(precioAdd);
-              
-        /*Iterator<String> keys = json.keys();
-        
-        while(keys.hasNext()) { 
-            String key = keys.next();
-            if (json.get(key) instanceof JSONObject) {
-                  System.out.println("eeee");   
+            try {
+                PrecioLuz precioAnyadir = new PrecioLuz();
+                PrecioLuzJSON precioAdd = new PrecioLuzJSON();
+                
+                System.out.println("[dd] " + value);
+                precioAdd = Arrancador.gson.fromJson(value.toString(), PrecioLuzJSON.class);
+                lista.add(precioAdd);
+                precioAnyadir.setPrecio(precioAdd.getPrice());
+                precioAnyadir.setFecha(new SimpleDateFormat("dd-MM-yyyy").parse(precioAdd.getDate()));
+                precioAnyadir.setHora(precioAdd.getHour());
+                precioAnyadir.setUnidades(precioAdd.getUnits());
+                preciosDB.createIfNotExists(precioAnyadir);
+            } catch (ParseException ex) {
+                System.out.println("[!] Excepcion parseando la fecha");
             }
-        }*/
+        });
+        
+        
+   
         
     }
     

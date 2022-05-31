@@ -43,19 +43,23 @@ public class UsuarioDAO extends AbstractFacade<Usuario> {
         return usuario;
     }
     
-    public void createIfNotExists(Usuario entity){
+    public boolean createIfNotExists(Usuario entity){
         List<Usuario> lista = findAll();
         boolean existeUsuario = false;
-        for (Usuario user: lista) {
-            if (user.getNombreUsuario().equals(entity.getNombreUsuario())){
-                existeUsuario = true;
-            }
+        if (lista != null){
+           for (Usuario user: lista) {
+                if (user.getNombreUsuario().equals(entity.getNombreUsuario())){
+                    existeUsuario = true;
+                }
+            } 
         }
+        
         
         if (!existeUsuario){
             super.create(entity);
+            return true;
         }
-        
+        return false;
     }
 
     public UsuarioDAO() {
