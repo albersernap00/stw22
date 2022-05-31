@@ -5,29 +5,29 @@
  */
 package stw22.servelt;
 
-import REST.client.LoginRESTClient;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import stw22.db.Usuario;
 import stw22.db.UsuarioDAO;
 
 /**
  *
- * @author rober
+ * @author Alberto
  */
-@WebServlet(name = "addUsuario", urlPatterns = {"/addUsuario"})
-public class AddUsuario extends HttpServlet {
-    @EJB UsuarioDAO usuarioDB;
+@WebServlet(name = "Login", urlPatterns = {"/login"})
+public class Login extends HttpServlet {
 
+    @EJB UsuarioDAO usuarioDB;
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -38,12 +38,22 @@ public class AddUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String login    = request.getParameter("username");
+        HttpSession session = request.getSession();
+        
+        String username = request.getParameter("username");
         String pwd      = request.getParameter("pwd");
+       
+        Usuario user = usuarioDB.checkAutenticacion(username, pwd);
         
-        
-        
-        
+        if (user!=null){
+            session.setAttribute("username", user.getNombreUsuario());
+            session.setAttribute("msg", null);
+            response.sendRedirect(response.encodeURL("menuPpal.jsp"));
+        }else{
+            session.setAttribute("username", null);
+            session.setAttribute("msg", "ERROR en la autenticación.");
+            response.sendRedirect(response.encodeURL("login.jsp"));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
