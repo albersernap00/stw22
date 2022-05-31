@@ -37,32 +37,13 @@ public class AddUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddUsuario</title>"); 
-            LoginRESTClient client = new LoginRESTClient();
-            Usuario usuario = new Usuario();
-            usuario.setNombreUsuario("alberto");
-            usuario.setPassword("rober");
-            client.registerUser(usuario);
-            client.close();
-            
-            out.println("</head>");
-            out.println("<body>");
-            List<Usuario> listaUsuarios = usuarioDB.findAll();
-            String cadena = "";
-            for (int i = 0; i < listaUsuarios.size(); i++) {
-                cadena += listaUsuarios.get(i).toString();
-                //usuarioDB.remove(listaUsuarios.get(i));
-                
-            }
-            out.println("<h1>Servlet AddUsuario at " + usuarioDB.findAll().size() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        String login    = request.getParameter("username");
+        String pwd      = request.getParameter("pwd");
+        
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
