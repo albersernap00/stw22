@@ -10,7 +10,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Inicio</title>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <body>
         <%
@@ -39,8 +40,23 @@
             <input type="submit" value="Cerrar sesión">
         </form>
         <h1 id="prueba"></h1>
-                
+        <input type="date" min="2022-05-31" id="datePrecioLuz" onchange="enviarFecha();">
+        <div id="graficaPrecios"></div>  
+        
+        
         
         <script type="text/javascript" src="websocket.js"></script>
+        <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart'], language:'es'});
+
+        /*google.charts.setOnLoadCallback(
+            function() { // Anonymous function that calls drawChart1 and drawChart2
+                initCo2GraphLive();
+                initCo2GraphLog();
+             });*/
+        google.charts.setOnLoadCallback(initGrafica);
+        //google.charts.setOnLoadCallback(initCo2GraphLog);
+
+        </script>
     </body>
 </html>

@@ -35,21 +35,18 @@ openSocket();
         var msg = event.data;
         
         console.log("==== "+msg);
-        /*var json =  JSON.parse(event.data);
+        var json =  JSON.parse(event.data);
         
         switch (json.cmnd){
-            case "provinciasId":                          
-                construirProvinciasSelect(json.values);
-                //json.provincias.foreach(construirProvinciasSelect);                                
-                //console.log(json.provincias)
-            
+            case "datePrecioLuzResult":                          
+                console.log(json.values);
+                //parsearValoresPrecioLuz(json.values);
+                console.log("ENTRO en el case");
+                drawPrices(json.values);
+            break;
                 
-        }*/
-        if (msg == "hola"){
-            titulo.innerHTML = "FELIZ NAVIDAD";
-            webSocket.send("adios");
-                     
-        }       
+        }
+            
         
     };
 
@@ -62,7 +59,25 @@ openSocket();
     };
 } //openSocket
 
-     
+
+function parsearValoresPrecioLuz(value){
+    if (value){
+        value.forEach(element =>{
+            console.log("heee " + element.id + " y la hora es " + element.hora);
+            console.log("haa");
+        });
+    }else{
+        window.alert("No hay información disponibles para la fecha seleccionada");
+    }        
+    
+}
+
+function enviarFecha(){
+    var fechaSelected = document.getElementById("datePrecioLuz").value;
+    console.log("[!!] estoy en enviar fecha : " + fechaSelected);
+    webSocket.send("{ \"cmnd\": " + "\"datePrecioLuz\", \"Fecha\": \"" + fechaSelected  + "\" }");
+    
+}
 
 
 function construirMunicipiosSelect (value){
@@ -93,40 +108,40 @@ function initGrafica(){
     console.log("HEEE");
     graficaPrecios = new google.visualization.LineChart(document.getElementById('graficaPrecios'));
     datosGraficaPrecios = new google.visualization.DataTable();
-    datosGraficaPrecios.addColumn('string', 'Time');
-    datosGraficaPrecios.addColumn('number', 'Precio Gasoleo A (€)');
-    datosGraficaPrecios.addColumn('number', 'Precio Gasolina E95 (€)');
-    optionsGraficoGasolina = {
-        chart:{title: 'CO2 Live data:'},
+    datosGraficaPrecios.addColumn('string', 'Hora');
+    datosGraficaPrecios.addColumn('number', 'Precio Luz (€/MWh)');    
+    optionsGraficoLuz = {
+        chart:{title: 'Precio Luz'},
         vAxis: {format:'decimal'},        
         curveType: 'function',
         legend: {position:'bottom'}
     };
-    graficaPrecios.draw(datosGraficaPrecios, optionsGraficoGasolina);
+    graficaPrecios.draw(datosGraficaPrecios, optionsGraficoLuz);
 }
 
 function drawPrices(value){
     
     if (datosGraficaPrecios!==undefined){
-        initGrafica();
-        console.log("[!!!!] " + value[0].length);
-        for (var i = 0; i < value[0].length; i++){
+        initGrafica();        
+        if (value){
+            value.forEach(element =>{
+                console.log("heee " + element.id + " y la hora es " + element.hora);            
+                datosGraficaPrecios.addRow([element.hora , element.precio]);
+            });   
+            if (value.length == 0){
+                window.alert("No hay información disponible para la fecha seleccionada");
+                console.log("AAA");
+            }
+            graficaPrecios.draw(datosGraficaPrecios, optionsGraficoLuz);
+        }
+        /*for (var i = 0; i < value[0].length; i++){
             
          datosGraficaPrecios.addRow([value[0][i].a ,parseFloat(value[0][i].b), parseFloat(value[1][i].b)]);
         
-        }
-        graficaPrecios.draw(datosGraficaPrecios, optionsGraficoGasolina);
+        }*/
+        
     }
     
-    
-}
-
-
-function sendCCAA(value){
-    console.log("HAHA " + value);   
-    if (value != "default"){
-        webSocket.send("{\"cmnd\":\"getProvincias\",\"CCAA\": \"" + value + "\"}");
-    }
     
 }
 

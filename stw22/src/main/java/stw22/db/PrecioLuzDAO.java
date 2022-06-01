@@ -5,10 +5,15 @@
  */
 package stw22.db;
 
+import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -49,6 +54,16 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
             return true;
         }
         return false;
+    }
+    
+    public List<PrecioLuz> obtenerPreciosDia(Date date){
+        
+        Query query = em.createQuery("SELECT p FROM PrecioLuz p WHERE p.fecha=:fecha ORDER BY p.hora ASC");
+        query.setParameter("fecha", date);
+        
+        List<PrecioLuz> lista = query.getResultList();
+        
+        return lista;
     }
     
 }
