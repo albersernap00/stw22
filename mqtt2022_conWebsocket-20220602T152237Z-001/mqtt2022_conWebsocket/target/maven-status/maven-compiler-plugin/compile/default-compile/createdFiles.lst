@@ -1,0 +1,10 @@
+demo\mqtt\MQTTManager.class
+demo\ejb\Raspberry.class
+demo\ejb\Starter.class
+demo\mqtt\Topic.class
+demo\util\Time.class
+demo\ejb\Sonoff.class
+demo\servlet\SwitchSonoff.class
+demo\mqtt\MqttListener.class
+demo\websocket\WebSocketManager.class
+demo\RpiDTO.class
