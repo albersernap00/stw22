@@ -5,20 +5,15 @@
  */
 package stw22.timer;
 
+import WebSocket.WebSocketManager;
 import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.DatagramSocket;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import stw22.mqtt.MQTTListener;
+import stw22.mqtt.MQTTManager;
 
 /**
  * java beans => sessions bean 
@@ -29,22 +24,42 @@ import javax.ejb.Startup;
 public class Arrancador {
     
     @EJB TimerPrecioLuz timer;
+    
+    public static final String TOPIC_SENSOR_LUZ = "/stw/stwAR/sensores/luz";   
+    public static final String TOPIC_SENSOR_MOVIMIENTO = "/stw/stwAR/sensores/movimiento";
+    
+    public static final String HOST = "tcp://192.168.1.68";
+    public static final String USER = "";
+    public static final String PASSWORD = "";
+    
+    
+    
+    private MQTTListener mqttListener;
+    private MQTTManager mqttManager;
+    private WebSocketManager ws; // TODO cambiarlo por el que sea singleton
     public static Gson gson;
+    
+    
     @PostConstruct
     public void init(){
-        gson = new Gson();
-        //timer.obtenerPrecioLuz();
-        //crearServicio(NOMBRE_SERVICIO, StatusCode.BOOTING, getIp());
-        System.out.println("====== LA IP ES ");
-        //Stockk_Services_Directory clientService = new Stockk_Services_Directory();
-        //clientService.registerService(servicio);
-        //clientService.close();
+        gson = new Gson();     
+        ws = new WebSocketManager();
+        mqttListener = new MQTTListener(ws);
+        mqttManager = new MQTTManager(HOST, USER, PASSWORD);       
+        
+        mqttManager.anyadirTopicSuscribe(TOPIC_SENSOR_LUZ);
+        mqttManager.anyadirTopicSuscribe(TOPIC_SENSOR_MOVIMIENTO);
+        
+        mqttManager.subscribe(mqttListener);
         
     }
     
     @PreDestroy
     public void bye(){
-        System.out.println("====== DOWN LA IP ES " );
+        ws = null;
+        if (mqttManager != null){
+            mqttManager.close();
+        }
                 
     }
     

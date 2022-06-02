@@ -39,8 +39,7 @@ import stw22.db.PrecioLuzDAO;
 
 @ServerEndpoint("/stw")
 public class WebSocketManager {
-    @EJB PrecioLuzDAO preciosDB;
-    
+    @EJB PrecioLuzDAO preciosDB;    
     private Set<Session> sessions = new HashSet<Session>(); 
     Gson gson;
     @OnOpen
@@ -49,7 +48,11 @@ public class WebSocketManager {
         sessions.add(_session);
         gson = new Gson();        
     }
+
+    public WebSocketManager() {
+    }
     
+      
     
     @OnMessage
     public String onMessage(String message) {
@@ -89,11 +92,11 @@ public class WebSocketManager {
      * @param _msg 
      */
     public void broadcastMsg(String _msg){
-        try {
-            for (Session session : sessions) {
+        try {                      
+            for (Session session : sessions) {                
                 session.getBasicRemote().sendText(_msg);
-            }
-        } catch (IOException ex) {
+            }            
+        } catch (IOException ex) {            
             Logger.getLogger(WebSocketManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
