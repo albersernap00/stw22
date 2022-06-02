@@ -6,6 +6,7 @@
 package stw22.timer;
 
 import WebSocket.WebSocketManager;
+import WebSocket.WebSocketManagerSingleton;
 import com.google.gson.Gson;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -24,7 +25,7 @@ import stw22.mqtt.MQTTManager;
 public class Arrancador {
     
     @EJB TimerPrecioLuz timer;
-    
+    @EJB WebSocketManagerSingleton ws;
     public static final String TOPIC_SENSOR_LUZ = "/stw/stwAR/sensores/luz";   
     public static final String TOPIC_SENSOR_MOVIMIENTO = "/stw/stwAR/sensores/movimiento";
     
@@ -36,14 +37,13 @@ public class Arrancador {
     
     private MQTTListener mqttListener;
     private MQTTManager mqttManager;
-    private WebSocketManager ws; // TODO cambiarlo por el que sea singleton
+    //private WebSocketManager ws; // TODO cambiarlo por el que sea singleton
     public static Gson gson;
     
     
     @PostConstruct
     public void init(){
-        gson = new Gson();     
-        ws = new WebSocketManager();
+        gson = new Gson();             
         mqttListener = new MQTTListener(ws);
         mqttManager = new MQTTManager(HOST, USER, PASSWORD);       
         

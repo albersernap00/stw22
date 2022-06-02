@@ -45,7 +45,8 @@
         
         
         
-        <script type="text/javascript" src="websocket.js"></script>
+        <script type="text/javascript" src="websocket.js"></script
+        <script type="text/javascript" src="websocketsingleton.js"></script>
         <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart'], language:'es'});
 
