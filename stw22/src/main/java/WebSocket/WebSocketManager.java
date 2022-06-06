@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -38,9 +39,11 @@ import stw22.db.PrecioLuzDAO;
  */
 
 @ServerEndpoint("/stw")
+@Singleton
 public class WebSocketManager {
     @EJB PrecioLuzDAO preciosDB;    
     private Set<Session> sessions = new HashSet<Session>(); 
+    
     Gson gson;
     @OnOpen
     public void onOpen(Session _session){
@@ -55,8 +58,8 @@ public class WebSocketManager {
       
     
     @OnMessage
-    public String onMessage(String message) {
-        System.out.println("[!] Recibo === " + message);
+    public String onMessage(Session sesion, String message) {
+        System.out.println("[!] Recibo ===  de la sesion "+ sesion.getId() + " el mensaje " + message);
         JSONObject obj = new JSONObject(message);
         String accion = "";
         String jsonCadena = "";
@@ -71,7 +74,7 @@ public class WebSocketManager {
                         System.out.println("[+] La fecha que recibo es " + valueFecha);
                         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(valueFecha);
                         List<PrecioLuz> listaValores = preciosDB.obtenerPreciosDia(date);                        
-                        publishMessage(gson.toJson(listaValores,List.class), "datePrecioLuzResult");
+                        sendMessageSession(gson.toJson(listaValores,List.class), "datePrecioLuzResult", sesion);
                 break;
                         
                 }
@@ -105,6 +108,16 @@ public class WebSocketManager {
         String json =  "{\"cmnd\": \""+ comando + "\", \"values\": " + cadena  + " }";
         System.out.println("El JSON q se manda es " + json);
         broadcastMsg(json);
+    }
+    
+    private void sendMessageSession(String cadena, String comando, Session sesion){
+        try {
+            String json =  "{\"cmnd\": \""+ comando + "\", \"values\": " + cadena  + " }";
+            System.out.println("El JSON q se manda es " + json);
+            sesion.getBasicRemote().sendText(json);
+        } catch (IOException ex) {
+            Logger.getLogger(WebSocketManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 

@@ -6,7 +6,7 @@
 package stw22.mqtt;
 
 import WebSocket.WebSocketManager;
-import WebSocket.WebSocketManagerSingleton;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -17,9 +17,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class MQTTListener implements MqttCallbackExtended {
 
-    private WebSocketManagerSingleton ws;
+    private WebSocketManager ws;
     
-    public MQTTListener(WebSocketManagerSingleton ws) {
+    public MQTTListener(WebSocketManager ws) {
         this.ws = ws;
     }
 
