@@ -12,6 +12,8 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import stw22.db.HistoricoSensores;
+import stw22.db.HistoricoSensoresDAO;
 import stw22.mqtt.MQTTListener;
 import stw22.mqtt.MQTTManager;
 
@@ -25,6 +27,7 @@ public class Arrancador {
     
     @EJB TimerPrecioLuz timer;
     @EJB WebSocketManager ws;
+    @EJB HistoricoSensoresDAO hs;
     public static final String TOPIC_SENSOR_LUZ = "/stw/stwAR/sensores/luz";   
     public static final String TOPIC_SENSOR_MOVIMIENTO = "/stw/stwAR/sensores/movimiento";
     
@@ -50,6 +53,13 @@ public class Arrancador {
         mqttManager.anyadirTopicSuscribe(TOPIC_SENSOR_MOVIMIENTO);
         
         mqttManager.subscribe(mqttListener);
+        System.out.println("[!] EMPIEZA LO BUENOI");
+        
+        System.out.println("sssssss"  + hs.findAll());
+        System.out.println("EL TAMANYU es " + hs.getHistoricoSensoresHora("22"));
+        
+        
+        System.out.println("[!] TERMINA LO BUENO");
         
     }
     

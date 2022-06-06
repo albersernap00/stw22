@@ -44,7 +44,9 @@ openSocket();
                 console.log("ENTRO en el case");
                 drawPrices(json.values);
             break;
-                
+            case "datosSensoresResult":
+                drawPricesBarras(json.values);
+            break;
         }
             
         
@@ -119,6 +121,43 @@ function initGrafica(){
     graficaPrecios.draw(datosGraficaPrecios, optionsGraficoLuz);
 }
 
+function initGraficaBarras(){
+    console.log("HEEE barras");
+    graficaBarras = new google.visualization.ColumnChart(document.getElementById('graficaBarras'));
+    datosGraficaBarras = new google.visualization.DataTable();
+    datosGraficaBarras.addColumn('number', 'Hora');
+    datosGraficaBarras.addColumn('number', 'Veces movimiento');  
+    
+    optionsGraficoLuz = {
+        chart:{title: 'Precio Luz'},
+        vAxis: {format:'decimal'},        
+        curveType: 'function',
+        legend: {position:'bottom'}
+    };
+    graficaBarras.draw(datosGraficaBarras, optionsGraficoLuz);    
+}
+
+function drawPricesBarras(value){
+    
+    if (datosGraficaBarras!==undefined){
+        initGraficaBarras();        
+        if (value){
+            value.forEach(element =>{
+                console.log("heee " + element.hora + " y la hora es " + element.value);            
+                datosGraficaBarras.addRow([ element.hora + 1 , element.value]); //TODO esta cambia
+            });   
+            /*if (value.length == 0){
+                window.alert("No hay información disponible para la fecha seleccionada");
+                console.log("AAA");
+            }*/
+            graficaBarras.draw(datosGraficaBarras, optionsGraficoLuz);
+        }    
+        
+    }
+    
+    
+}
+
 function drawPrices(value){
     
     if (datosGraficaPrecios!==undefined){
@@ -133,12 +172,7 @@ function drawPrices(value){
                 console.log("AAA");
             }
             graficaPrecios.draw(datosGraficaPrecios, optionsGraficoLuz);
-        }
-        /*for (var i = 0; i < value[0].length; i++){
-            
-         datosGraficaPrecios.addRow([value[0][i].a ,parseFloat(value[0][i].b), parseFloat(value[1][i].b)]);
-        
-        }*/
+        }    
         
     }
     
