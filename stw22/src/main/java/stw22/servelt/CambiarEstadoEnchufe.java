@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import stw22.ejb.Sonoff;
 import stw22.timer.Arrancador;
 
 /**
@@ -24,6 +25,7 @@ import stw22.timer.Arrancador;
 public class CambiarEstadoEnchufe extends HttpServlet {
     
     @EJB Arrancador arrancador;
+    @EJB Sonoff sonoff;
     public static final String TOPIC_ENCHUFE = "/stw/stwAR/cmnd/POWER";  
 
     
@@ -39,7 +41,15 @@ public class CambiarEstadoEnchufe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        arrancador.getMqtt().publish(TOPIC_ENCHUFE, "1", true);
+        String comando   = request.getParameter("comando");
+         
+        arrancador.getMqtt().publish(TOPIC_ENCHUFE, comando, false);
+        if(comando.equals("1")){ //necesario? si no no cambia de color
+            sonoff.setEstado(Boolean.TRUE);
+        }else{
+            sonoff.setEstado(Boolean.FALSE);
+        }
+        
         response.sendRedirect(response.encodeURL("index.jsp"));
     }
 

@@ -22,7 +22,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class MQTTManager {
     
-    public static final int QOS = 0;
+    public static final int QOS = 1;
     
     private MqttClient mqttClient;
     private MemoryPersistence persistence = new MemoryPersistence();
@@ -34,7 +34,7 @@ public class MQTTManager {
     private String user;
     private String password;
     private List<String> topicsToSubscribe = new ArrayList(); // Topics a los que te quieres suscribir
-
+    int cont = 0;
     
     public MQTTManager(String broker, String user, String password) {
         this.broker = broker;
@@ -85,7 +85,7 @@ public void publish(String _topic, String _msg, boolean retain){
     public boolean connectBroker(String _user, String _password, String _broker){
         if(mqttClient == null){
             try {
-                 mqttClient = new MqttClient(_broker, "ra", persistence);
+                 mqttClient = new MqttClient(_broker, "ra" + cont++, persistence);
             
             } catch (MqttException ex) {
                 Logger.getLogger(MQTTManager.class.getName()).log(Level.SEVERE, null, ex);

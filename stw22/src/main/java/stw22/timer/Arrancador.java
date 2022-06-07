@@ -56,8 +56,7 @@ public class Arrancador {
         mqttManager.anyadirTopicSuscribe(TOPIC_ENCHUFE);
         
         mqttManager.subscribe(mqttListener);
-        
-        mqttManager.publish(TOPIC_ENCHUFE, "0", true); // Por defecto al arrancar esta a 0
+                
         System.out.println("[!] EMPIEZA LO BUENO");
         
         System.out.println("sssssss"  + hs.findAll());

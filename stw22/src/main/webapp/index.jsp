@@ -5,7 +5,31 @@
 --%>
 
 
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="stw22.ejb.Sonoff"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% 
+    Sonoff sonoff = null;
+    InitialContext ic = new InitialContext();
+    sonoff = (Sonoff) ic.lookup("java:global/stw22/Sonoff");
+    String estadoSonoff = "???";
+    String onDisabled = "";
+    String offDisabled = "";
+    String color = "";
+    
+    if(sonoff.getEstado()){
+        onDisabled = "DISABLED";
+        offDisabled = "";
+        color = "yellowgreen";
+        estadoSonoff = "ENCENDIDO";
+    }else{
+        onDisabled = "";
+        offDisabled = "DISABLED";
+        color = "red";
+        estadoSonoff = "APAGADO";
+    }
+
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,18 +80,18 @@
                             <td>
                                 <fieldset>
                                 <form method="POST" id="sonoff" action="cambiarEstadoEnchufe">
-                                    <button id="botonON" type="submit" >ON</button> 
-                                    <button id="botonOFF" type="submit">OFF</button> 
+                                    <button id="botonON" type="submit" name="comando" value="1" <%=onDisabled%>>ON</button> 
+                                    <button id="botonOFF" type="submit" name="comando" value="0" <%=offDisabled%>>OFF</button> 
                                 </form>
                                 </fieldset>
                             </td>
                             <td>
-                                <canvas id="canvas" style="background-color: black"  width="50" height="50"></canvas>
+                                <canvas id="canvas" style="background-color: <%=color%>"  width="50" height="50"></canvas>
                             </td>        
                         </tr>
                         <tr>
                             <td valign="middle" colspan="2">
-                                <div id="estado">???</div>
+                                <div id="estado">Estado <%=estadoSonoff%> </div>
                             </td>    
                         </tr>
                     </table>
