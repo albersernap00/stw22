@@ -72,9 +72,9 @@ public void publish(String _topic, String _msg){
             MqttMessage mensajeSalida = new MqttMessage(_msg.getBytes());
             mensajeSalida.setQos(QOS);
             mensajeSalida.setRetained(false);
-            mqttClient.publish(_topic, mensajeSalida);
+            //mqttClient.publish(_topic, mensajeSalida);
             System.out.println("[+] Publicado mensaje " + _msg + " sobre el topic " + _topic);
-        } catch (MqttException ex) {
+        } catch (Exception ex) {
             System.out.println("[!] Excepcion publicando mensaje " + _msg + " sobre el topic " + _topic);
         }
     }

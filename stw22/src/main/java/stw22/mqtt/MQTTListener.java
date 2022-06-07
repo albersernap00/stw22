@@ -71,8 +71,6 @@ public class MQTTListener implements MqttCallbackExtended {
             historico.setValorSensorMovimiento(movimiento);            
             
             ws.addHistoricoLuz(historico);
-            
-            
                      
         }catch(Exception e){
             e.printStackTrace();
