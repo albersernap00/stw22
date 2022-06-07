@@ -12,6 +12,11 @@
         <title>LOGIN</title>
     </head>
     <body>
+        <%
+          if (session.isNew()){
+            session.setAttribute("msg", "");
+          } 
+        %>
          <h1>LOGIN</h1>
         <hr>
         <br>

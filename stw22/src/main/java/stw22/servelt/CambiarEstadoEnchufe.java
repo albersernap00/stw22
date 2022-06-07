@@ -5,6 +5,7 @@
  */
 package stw22.servelt;
 
+import WebSocket.WebSocketManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,7 +24,6 @@ import stw22.timer.Arrancador;
 public class CambiarEstadoEnchufe extends HttpServlet {
     
     @EJB Arrancador arrancador;
-
     public static final String TOPIC_ENCHUFE = "/stw/stwAR/cmnd/POWER";  
 
     

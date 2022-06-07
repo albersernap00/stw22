@@ -23,7 +23,7 @@
         <%
           } 
         %>
-        <h1>Hello Worldmtyty! <%=nombreUsuario%></h1>
+        <h1>Hola <%=nombreUsuario%>!</h1>
         <form action="listarPrecios">
             <input type="submit" value="Listar">
         </form>
