@@ -77,7 +77,7 @@ public class WebSocketManager {
                         System.out.println("[+] La fecha que recibo en las barras es " + valueFecha);
                         sendDataSensores(date, "datosSensoresResultFecha");
                     break;
-                
+                    
                         
                 }
             } catch (ParseException ex) {
@@ -155,6 +155,10 @@ public class WebSocketManager {
             System.out.println("Excepcion add " + e.toString());
             e.printStackTrace();
         }
+    }
+
+    public void sendStatusEnchufe(String mensaje) {
+        publishMessage(mensaje, "enchufe");
     }
     
 

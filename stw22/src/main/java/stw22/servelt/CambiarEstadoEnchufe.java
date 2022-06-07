@@ -20,11 +20,11 @@ import stw22.timer.Arrancador;
  * @author Alberto
  */
 @WebServlet(name = "cambiarEstadoEnchufe", urlPatterns = {"/cambiarEstadoEnchufe"})
-public class cambiarEstadoEnchufe extends HttpServlet {
+public class CambiarEstadoEnchufe extends HttpServlet {
     
     @EJB Arrancador arrancador;
 
-    public static final String TOPIC_ENCHUFE = "/stw/stwAR/enchufe";  
+    public static final String TOPIC_ENCHUFE = "/stw/stwAR/cmnd/POWER";  
 
     
     /**
@@ -38,7 +38,8 @@ public class cambiarEstadoEnchufe extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        arrancador.getMqtt().publish(TOPIC_ENCHUFE, "hola");
+        
+        arrancador.getMqtt().publish(TOPIC_ENCHUFE, "1", true);
         response.sendRedirect(response.encodeURL("index.jsp"));
     }
 

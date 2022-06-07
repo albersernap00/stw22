@@ -22,7 +22,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class MQTTManager {
     
-    public static final int QOS = 1;
+    public static final int QOS = 0;
     
     private MqttClient mqttClient;
     private MemoryPersistence persistence = new MemoryPersistence();
@@ -53,6 +53,7 @@ public class MQTTManager {
             
                 if ((mqttClient!=null)&&(mqttClient.isConnected())){
                 mqttClient.setCallback(_callback);
+                
                 try {
                     mqttClient.subscribe(_topic);
                     System.out.println("[!!] Suscrito a " + _topic);
@@ -66,13 +67,13 @@ public class MQTTManager {
 /*
     El valor de QoS se establece por defecto a 1
 */    
-public void publish(String _topic, String _msg){
+public void publish(String _topic, String _msg, boolean retain){
     if (mqttClient != null && mqttClient.isConnected()){
         try {
             MqttMessage mensajeSalida = new MqttMessage(_msg.getBytes());
             mensajeSalida.setQos(QOS);
-            mensajeSalida.setRetained(false);
-            //mqttClient.publish(_topic, mensajeSalida);
+            mensajeSalida.setRetained(retain);
+            mqttClient.publish(_topic, mensajeSalida);
             System.out.println("[+] Publicado mensaje " + _msg + " sobre el topic " + _topic);
         } catch (Exception ex) {
             System.out.println("[!] Excepcion publicando mensaje " + _msg + " sobre el topic " + _topic);
@@ -80,7 +81,7 @@ public void publish(String _topic, String _msg){
     }
     
 }    
-    
+   
     public boolean connectBroker(String _user, String _password, String _broker){
         if(mqttClient == null){
             try {

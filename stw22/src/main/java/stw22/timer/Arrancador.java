@@ -28,8 +28,9 @@ public class Arrancador {
     @EJB TimerPrecioLuz timer;
     @EJB WebSocketManager ws;
     @EJB HistoricoSensoresDAO hs;
-    public static final String TOPIC_ENCHUFE = "/stw/stwAR/enchufe";  
+    public static final String TOPIC_ENCHUFE = "/stw/stwAR/cmnd/POWER";  
     public static final String TOPIC_SENSOR_LUZ = "/stw/stwAR/sensores/luz";   
+    
     public static final String TOPIC_SENSOR_MOVIMIENTO = "/stw/stwAR/sensores/movimiento";
     
     public static final String HOST = "tcp://192.168.1.68";
@@ -52,8 +53,11 @@ public class Arrancador {
         
         mqttManager.anyadirTopicSuscribe(TOPIC_SENSOR_LUZ);
         mqttManager.anyadirTopicSuscribe(TOPIC_SENSOR_MOVIMIENTO);
+        mqttManager.anyadirTopicSuscribe(TOPIC_ENCHUFE);
         
         mqttManager.subscribe(mqttListener);
+        
+        mqttManager.publish(TOPIC_ENCHUFE, "0", true); // Por defecto al arrancar esta a 0
         System.out.println("[!] EMPIEZA LO BUENO");
         
         System.out.println("sssssss"  + hs.findAll());

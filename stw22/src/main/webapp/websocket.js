@@ -51,12 +51,13 @@ openSocket();
                 drawPricesBarras(json.values);
             break;
             case "enchufe":
-                var status = json.msg;
+                console.log("me ha llegao : " + json.values);
+                var status = json.values;
                 var colorStatus = "red";
                 var txtStatus = "APAGADO";
                 document.getElementById("botonON").disabled = false;
                 document.getElementById("botonOFF").disabled = true;
-                if ((status==="ON")||(status==="true")){
+                if ((status==="ON")||(status==="1")){
                     colorStatus = "yellowgreen";
                     txtStatus = "ENCENDIDO";
                     document.getElementById("botonON").disabled = true;
