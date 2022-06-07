@@ -63,7 +63,7 @@ public class WebSocketManager {
         String accion = "";
         String jsonCadena = "";
         String valueFecha = "";
-       
+        Date date;
         if(obj.has("cmnd")){
             try {
                 accion = obj.getString("cmnd");
@@ -71,10 +71,17 @@ public class WebSocketManager {
                     case "datePrecioLuz":
                         valueFecha = obj.getString("Fecha");
                         System.out.println("[+] La fecha que recibo es " + valueFecha);
-                        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(valueFecha);
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse(valueFecha);
                         List<PrecioLuz> listaValores = preciosDB.obtenerPreciosDia(date);                        
                         sendMessageSession(gson.toJson(listaValores,List.class), "datePrecioLuzResult", sesion);
-                break;
+                    break;
+                    case "dateGraficaBarras":
+                        valueFecha = obj.getString("Fecha");
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse(valueFecha);
+                        System.out.println("[+] La fecha que recibo en las barras es " + valueFecha);
+                        sendDataSensores(date, "datosSensoresResultFecha");
+                    break;
+                
                         
                 }
             } catch (ParseException ex) {
@@ -121,25 +128,23 @@ public class WebSocketManager {
     
     public void addHistoricoLuz(HistoricoSensores _sensor){
         historicoDB.create(_sensor);   
-        sendDataSensores();
+        sendDataSensores(null, "datosSensoresResult"); // Si mandas null es la fecha actual
     }
     
-    public void sendDataSensores(){
+    public void sendDataSensores(Date fecha, String comando){
         try{
             
             String listaJson = "[";
             for (int i = 0; i < 24; i++) {
                 int numVeces = 0;
                 if (i < 10){
-                    numVeces = historicoDB.getHistoricoSensoresHora("0" + String.valueOf(i));
+                    numVeces = historicoDB.getHistoricoSensoresHora("0" + String.valueOf(i), fecha);
                 }else{
-                    numVeces = historicoDB.getHistoricoSensoresHora(String.valueOf(i));
+                    numVeces = historicoDB.getHistoricoSensoresHora(String.valueOf(i), fecha);
                 }
                 
                 if(i == 23){
                     listaJson += "{\"hora\": \"" + i + "\", \"value\": \""+numVeces + "\"}";
-                }else if(i == 0){
-                    listaJson += "{\"hora\": \"" + "24" + "\", \"value\": \""+numVeces + "\"},";
                 }else{
                     listaJson += "{\"hora\": \"" + i + "\", \"value\": \""+numVeces + "\"},";
                 }
@@ -149,7 +154,7 @@ public class WebSocketManager {
             }
             
             listaJson +="]";
-            publishMessage(listaJson, "datosSensoresResult");
+            publishMessage(listaJson, comando);
         }catch(Exception e){
             System.out.println("Excepcion add " + e.toString());
             e.printStackTrace();

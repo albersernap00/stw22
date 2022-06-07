@@ -56,7 +56,7 @@ public class Arrancador {
         System.out.println("[!] EMPIEZA LO BUENOI");
         
         System.out.println("sssssss"  + hs.findAll());
-        System.out.println("EL TAMANYU es " + hs.getHistoricoSensoresHora("22"));
+        //System.out.println("EL TAMANYU es " + hs.getHistoricoSensoresHora("22"));
         
         
         System.out.println("[!] TERMINA LO BUENO");

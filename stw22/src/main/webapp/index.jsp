@@ -42,7 +42,7 @@
         <h1 id="prueba"></h1>
         <input type="date" min="2022-05-31" id="datePrecioLuz" onchange="enviarFecha();">
         <div id="graficaPrecios"></div>  
-        <input type="date" min="2022-05-31" id="dateGraficaBarras" onchange="">
+        <input type="date" min="2022-05-31" id="dateGraficaBarras" onchange="enviarFechaHistorico();">
         <div id="graficaBarras"></div>  
         
         
@@ -63,16 +63,8 @@
         </script>
         
         <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart'], language:'es'});
-
-        /*google.charts.setOnLoadCallback(
-            function() { // Anonymous function that calls drawChart1 and drawChart2
-                initCo2GraphLive();
-                initCo2GraphLog();
-             });*/
-        google.charts.setOnLoadCallback(initGraficaBarras);
-        //google.charts.setOnLoadCallback(initCo2GraphLog);
-
+        google.charts.load('current', {'packages':['corechart', 'bar'], language:'es'});
+        google.charts.setOnLoadCallback(initGraficaBarras);        
         </script>
     </body>
 </html>

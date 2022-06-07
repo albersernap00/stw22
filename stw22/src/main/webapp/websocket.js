@@ -44,7 +44,10 @@ openSocket();
                 console.log("ENTRO en el case");
                 drawPrices(json.values);
             break;
-            case "datosSensoresResult":
+            case "datosSensoresResult": //este viene del MQTT
+                checkDrawPricesBarras(json.values);
+            break;
+            case "datosSensoresResultFecha":
                 drawPricesBarras(json.values);
             break;
         }
@@ -78,6 +81,12 @@ function enviarFecha(){
     var fechaSelected = document.getElementById("datePrecioLuz").value;
     console.log("[!!] estoy en enviar fecha : " + fechaSelected);
     webSocket.send("{ \"cmnd\": " + "\"datePrecioLuz\", \"Fecha\": \"" + fechaSelected  + "\" }");
+    
+}
+function enviarFechaHistorico(){
+    var fechaSelected = document.getElementById("dateGraficaBarras").value;
+    console.log("[!!] estoy en enviar fecha : " + fechaSelected);
+    webSocket.send("{ \"cmnd\": " + "\"dateGraficaBarras\", \"Fecha\": \"" + fechaSelected  + "\" }");
     
 }
 
@@ -121,42 +130,99 @@ function initGrafica(){
     graficaPrecios.draw(datosGraficaPrecios, optionsGraficoLuz);
 }
 
-function initGraficaBarras(){
-    console.log("HEEE barras");
-    graficaBarras = new google.visualization.ColumnChart(document.getElementById('graficaBarras'));
-    datosGraficaBarras = new google.visualization.DataTable();
-    datosGraficaBarras.addColumn('number', 'Hora');
-    datosGraficaBarras.addColumn('number', 'Veces movimiento');  
-    
-    optionsGraficoLuz = {
-        chart:{title: 'Precio Luz'},
-        vAxis: {format:'decimal'},        
-        curveType: 'function',
-        legend: {position:'bottom'}
-    };
-    graficaBarras.draw(datosGraficaBarras, optionsGraficoLuz);    
+function initGraficaBarras() {
+      var data = google.visualization.arrayToDataTable([
+        ['Hora', 'Numero veces']
+      ]);
+      var materialChart = new google.charts.Bar(document.getElementById('graficaBarras'));
+      var materialOptions = {
+        chart: {
+          title: 'Número de veces enchufe enciende'
+        },
+        hAxis: {
+          title: 'Horas',
+          minValue: 0,
+        },
+        vAxis: {
+          title: 'Veces'
+        },
+        bars: 'horizontal'
+      };
+      
+      materialChart.draw(data, materialOptions);
 }
 
-function drawPricesBarras(value){
+//Se le llama cuando venga del websocket
+function checkDrawPricesBarras(value){
+    var fechaSelected = document.getElementById("dateGraficaBarras").value;
+    today = new Date();    
+    fechaSel = new Date(fechaSelected);    
     
-    if (datosGraficaBarras!==undefined){
-        initGraficaBarras();        
-        if (value){
-            value.forEach(element =>{
-                console.log("heee " + element.hora + " y la hora es " + element.value);            
-                datosGraficaBarras.addRow([ element.hora + 1 , element.value]); //TODO esta cambia
-            });   
-            /*if (value.length == 0){
-                window.alert("No hay información disponible para la fecha seleccionada");
-                console.log("AAA");
-            }*/
-            graficaBarras.draw(datosGraficaBarras, optionsGraficoLuz);
-        }    
-        
+    if (fechaSel.getDate() == today.getDate()){
+        drawPricesBarras(value);
     }
-    
-    
 }
+
+function drawPricesBarras(value) {
+    var materialChart = new google.charts.Bar(document.getElementById('graficaBarras'));
+    
+    if (materialChart!==undefined){
+        initGraficaBarras();  
+        if (value){
+            var data = google.visualization.arrayToDataTable([
+                ['Hora', 'Numero veces']
+            ]);
+            var dataArray = [
+                ['Hora', 'Numero veces'],
+                [' ',0],                
+            ];
+            value.forEach(element =>{
+                console.log("Concateno " +element.hora + " y " + element.value);
+                valor = parseInt(element.hora) + 1;
+                if (element.hora < 10){
+                    
+                    dataArray.push(['0' + element.hora + '- 0' + valor , element.value]);
+                }else {
+                    dataArray.push([element.hora + "-" + valor, element.value]);
+                }
+                
+                
+            });
+            data = google.visualization.arrayToDataTable(dataArray);
+            //var dataGoogle = google.visualization.arrayToDataTable(data);
+            /*dataGoogle = google.visualization.arrayToDataTable([
+                ['Hora', 'Numero veces'],
+                ['00-01', 2],
+                ['00-02', 0],
+                ['00-03', 2],
+            ]);*/
+            var materialOptions = {
+                chart: {
+                  title: 'Número de veces enchufe enciende',
+                  
+                },
+                hAxis: {
+                  title: 'Horas',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Veces',                 
+                },
+                bars: 'horizontal',
+                width:800,
+                height:800
+            };           
+            materialChart.draw(data, materialOptions);
+            console.log("TERMINO DE PINTAR");
+        }
+    }
+        
+      
+
+     
+}
+
+
 
 function drawPrices(value){
     
