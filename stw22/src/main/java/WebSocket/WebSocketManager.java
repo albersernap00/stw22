@@ -5,8 +5,6 @@
  */
 package WebSocket;
 
-
-
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.text.ParseException;
@@ -53,8 +51,6 @@ public class WebSocketManager {
 
     public WebSocketManager() {
     }
-    
-      
     
     @OnMessage
     public String onMessage(Session sesion, String message) {

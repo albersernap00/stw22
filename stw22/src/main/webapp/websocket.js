@@ -50,6 +50,21 @@ openSocket();
             case "datosSensoresResultFecha":
                 drawPricesBarras(json.values);
             break;
+            case "enchufe":
+                var status = json.msg;
+                var colorStatus = "red";
+                var txtStatus = "APAGADO";
+                document.getElementById("botonON").disabled = false;
+                document.getElementById("botonOFF").disabled = true;
+                if ((status==="ON")||(status==="true")){
+                    colorStatus = "yellowgreen";
+                    txtStatus = "ENCENDIDO";
+                    document.getElementById("botonON").disabled = true;
+                    document.getElementById("botonOFF").disabled = false;
+                }
+                document.getElementById("canvas").style.backgroundColor = colorStatus;
+                document.getElementById("estado").innerHTML = txtStatus;
+            break;
         }
             
         
