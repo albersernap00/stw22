@@ -26,6 +26,8 @@ import stw22.db.HistoricoSensores;
 import stw22.db.HistoricoSensoresDAO;
 import stw22.db.PrecioLuz;
 import stw22.db.PrecioLuzDAO;
+import stw22.ejb.Sonoff;
+import stw22.timer.Arrancador;
 
 
 /**
@@ -38,6 +40,8 @@ import stw22.db.PrecioLuzDAO;
 public class WebSocketManager {
     @EJB PrecioLuzDAO preciosDB; 
     @EJB HistoricoSensoresDAO historicoDB;
+    @EJB Sonoff sonoff;
+    @EJB Arrancador starter;
     
     private Set<Session> sessions = new HashSet<Session>(); 
     
@@ -59,6 +63,7 @@ public class WebSocketManager {
         String accion = "";
         String jsonCadena = "";
         String valueFecha = "";
+        
         Date date;
         if(obj.has("cmnd")){
             try {
@@ -76,6 +81,18 @@ public class WebSocketManager {
                         date = new SimpleDateFormat("yyyy-MM-dd").parse(valueFecha);
                         System.out.println("[+] La fecha que recibo en las barras es " + valueFecha);
                         sendDataSensores(date, "datosSensoresResultFecha");
+                    break;
+                    case "updateSonoff":
+                        boolean estadoSonoff = obj.getBoolean("Value");
+                        sonoff.setEstado(estadoSonoff); // y publish del mqtt
+                        //publishMessage(String.valueOf(sonoff.getEstado()), "enchufe");
+                        if (estadoSonoff){
+                            starter.getMqtt().publish("/stw/stwAR/cmnd/POWER","1" , false);
+                        }else{
+                            starter.getMqtt().publish("/stw/stwAR/cmnd/POWER","0" , false);
+                        }
+                        
+                        
                     break;
                     
                         

@@ -51,20 +51,41 @@ openSocket();
                 drawPricesBarras(json.values);
             break;
             case "enchufe":
-                console.log("me ha llegao : " + json.values);
+                var value = json.values;
+                console.log("AAA q pasa el value es " + value);
+                var estado = false;
+                var colorStatus = "red";
+
+                if (value === 1){
+
+                    document.getElementById("botonON").disabled = true;
+                    document.getElementById("botonOFF").disabled = false;
+                    estado = true;
+                    document.getElementById("estado").innerHTML = "ENCENCDIDO";
+                    colorStatus = "yellowgreen";
+                }else{        
+                    document.getElementById("botonON").disabled = false;
+                    document.getElementById("botonOFF").disabled = true;
+                    estado = false;
+                    document.getElementById("estado").innerHTML = "APAGADO";        
+                }
+                document.getElementById("canvas").style.backgroundColor = colorStatus;
+                /*console.log("me ha llegao : " + json.values);
                 var status = json.values;
                 var colorStatus = "red";
                 var txtStatus = "APAGADO";
                 document.getElementById("botonON").disabled = false;
                 document.getElementById("botonOFF").disabled = true;
-                if ((status==="ON")||(status==="1")){
+                console.log("EL JSON VALUES ES " + json.values);
+                if ((status==="ON")||(status==="1") ||(status === true)){
+                    console.log("ESTOY AQUI DENTRO");
                     colorStatus = "yellowgreen";
                     txtStatus = "ENCENDIDO";
                     document.getElementById("botonON").disabled = true;
                     document.getElementById("botonOFF").disabled = false;
                 }
                 document.getElementById("canvas").style.backgroundColor = colorStatus;
-                document.getElementById("estado").innerHTML = txtStatus;
+                document.getElementById("estado").innerHTML = txtStatus;*/
             break;
         }
             
@@ -103,6 +124,29 @@ function enviarFechaHistorico(){
     var fechaSelected = document.getElementById("dateGraficaBarras").value;
     console.log("[!!] estoy en enviar fecha : " + fechaSelected);
     webSocket.send("{ \"cmnd\": " + "\"dateGraficaBarras\", \"Fecha\": \"" + fechaSelected  + "\" }");
+    
+}
+
+function pruebaSwitch(value){
+    console.log("AAA q pasa el value es " + value);
+    var estado = false;
+    var colorStatus = "red";
+    
+    if (value == 1){
+        
+        document.getElementById("botonON").disabled = true;
+        document.getElementById("botonOFF").disabled = false;
+        estado = true;
+        document.getElementById("estado").innerHTML = "ENCENCDIDO";
+        colorStatus = "yellowgreen";
+    }else{        
+        document.getElementById("botonON").disabled = false;
+        document.getElementById("botonOFF").disabled = true;
+        estado = false;
+        document.getElementById("estado").innerHTML = "APAGADO";        
+    }
+    document.getElementById("canvas").style.backgroundColor = colorStatus;
+    webSocket.send("{ \"cmnd\": " + "\"updateSonoff\", \"Value\": " + estado  + " }");
     
 }
 

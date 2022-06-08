@@ -49,6 +49,7 @@ public class MQTTListener implements MqttCallbackExtended {
         // Y si es el sensor de luz/movimiento meterlo en la BD --> JPA de historico?
         if(string.equals(Arrancador.TOPIC_ENCHUFE)){
             ws.sendStatusEnchufe(mm.toString());
+            System.out.println("En el mqtt arrived tengo " + mm.toString());
         }else{
             Date fecha;
             String hora;

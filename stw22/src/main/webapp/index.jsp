@@ -79,14 +79,19 @@
                         <tr>
                             <td>
                                 <fieldset>
-                                <form method="POST" id="sonoff" action="cambiarEstadoEnchufe">
-                                    <button id="botonON" type="submit" name="comando" value="1" <%=onDisabled%>>ON</button> 
-                                    <button id="botonOFF" type="submit" name="comando" value="0" <%=offDisabled%>>OFF</button> 
-                                </form>
+                                <!--<form method="POST" id="sonoff" action="">
+                                    <button id="botonON" type="submit" name="comando" value="1" <%=onDisabled%> onclick="pruebaSwitch(value);">ON</button> 
+                                    <button id="botonOFF" type="submit" name="comando" value="0" <%=offDisabled%> onclick="pruebaSwitch(value);">OFF</button> -->
+                                    <button id="botonON" type="submit" name="comando" value="1" <%=onDisabled%>  onclick="pruebaSwitch(value);">ON</button> 
+                                    <button id="botonOFF" type="submit" name="comando" value="0" <%=offDisabled%> onclick="pruebaSwitch(value);">OFF</button>
+                                    
+                                    
+                                <!--</form>-->
                                 </fieldset>
                             </td>
                             <td>
                                 <canvas id="canvas" style="background-color: <%=color%>"  width="50" height="50"></canvas>
+                                
                             </td>        
                         </tr>
                         <tr>

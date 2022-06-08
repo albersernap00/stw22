@@ -77,6 +77,7 @@ public void publish(String _topic, String _msg, boolean retain){
             System.out.println("[+] Publicado mensaje " + _msg + " sobre el topic " + _topic);
         } catch (Exception ex) {
             System.out.println("[!] Excepcion publicando mensaje " + _msg + " sobre el topic " + _topic);
+            this.connectBroker(user, password, broker);
         }
     }
     
