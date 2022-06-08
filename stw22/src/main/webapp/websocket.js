@@ -61,7 +61,7 @@ openSocket();
                     document.getElementById("botonON").disabled = true;
                     document.getElementById("botonOFF").disabled = false;
                     estado = true;
-                    document.getElementById("estado").innerHTML = "ENCENCDIDO";
+                    document.getElementById("estado").innerHTML = "ENCENDIDO";
                     colorStatus = "yellowgreen";
                 }else{        
                     document.getElementById("botonON").disabled = false;
@@ -70,22 +70,10 @@ openSocket();
                     document.getElementById("estado").innerHTML = "APAGADO";        
                 }
                 document.getElementById("canvas").style.backgroundColor = colorStatus;
-                /*console.log("me ha llegao : " + json.values);
-                var status = json.values;
-                var colorStatus = "red";
-                var txtStatus = "APAGADO";
-                document.getElementById("botonON").disabled = false;
-                document.getElementById("botonOFF").disabled = true;
-                console.log("EL JSON VALUES ES " + json.values);
-                if ((status==="ON")||(status==="1") ||(status === true)){
-                    console.log("ESTOY AQUI DENTRO");
-                    colorStatus = "yellowgreen";
-                    txtStatus = "ENCENDIDO";
-                    document.getElementById("botonON").disabled = true;
-                    document.getElementById("botonOFF").disabled = false;
-                }
-                document.getElementById("canvas").style.backgroundColor = colorStatus;
-                document.getElementById("estado").innerHTML = txtStatus;*/
+            break;
+            case "updateGasto":
+                document.getElementById("gastoEnchufe").innerHTML = json.values;        
+                
             break;
         }
             
@@ -139,6 +127,7 @@ function pruebaSwitch(value){
         estado = true;
         document.getElementById("estado").innerHTML = "ENCENCDIDO";
         colorStatus = "yellowgreen";
+        
     }else{        
         document.getElementById("botonON").disabled = false;
         document.getElementById("botonOFF").disabled = true;

@@ -41,6 +41,8 @@ public class TimerPrecioLuz {
     }
     
     
+    
+    
     public void obtenerPrecioLuz(){
         
         System.out.println("===== REFRESH REGISTRO dd");

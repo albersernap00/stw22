@@ -66,4 +66,34 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
         return lista;
     }
     
+    public double obtenerPreciosNow(){
+        Date hoy = new Date();
+        int hora = hoy.getHours() + 2;
+        
+        List<PrecioLuz> lista = super.findAll();
+        
+        String horaSelect = getHoraSelect(hora);
+        System.out.println("[!!!!!!!!!!!!] La hora en cadena es '" + horaSelect + "'");
+        for(PrecioLuz p: lista){
+            System.out.println("La hora a comprarar es '" + p.getHora() + "' y '" + horaSelect + "'");
+            System.out.println("La fecha a comprarar es '" + p.getFecha().getDate() + "' y '" + hoy.getDate() + "'");
+            if (p.getFecha().getDate() == hoy.getDate() && p.getHora().equals(horaSelect)){
+                return p.getPrecio();
+            }
+        }       
+        return 0.0;
+    }
+
+    private String getHoraSelect(int hora) {
+        String horaReturn = "";
+        if(hora < 9){
+            horaReturn = "0" + hora + "-0" + (hora + 1);                        
+        }else if (hora == 9){
+            horaReturn = "0" + hora + "-10";
+        }else{
+            horaReturn = hora + "-" + (hora + 1);
+        }
+        return horaReturn;
+    }
+    
 }

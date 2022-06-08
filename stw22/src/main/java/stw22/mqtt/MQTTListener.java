@@ -11,12 +11,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import javax.ejb.EJB;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 import stw22.db.HistoricoSensores;
+import stw22.ejb.Sonoff;
 import stw22.timer.Arrancador;
 
 /**
@@ -25,6 +27,8 @@ import stw22.timer.Arrancador;
  */
 public class MQTTListener implements MqttCallbackExtended {
     
+    
+            
     
     private WebSocketManager ws;
     
@@ -65,18 +69,25 @@ public class MQTTListener implements MqttCallbackExtended {
                 System.out.println("El valor de obj es " + obj);
 
                 valorLuz = obj.getDouble("luz");
-                movimiento = obj.getInt("movimiento");        
-                LocalDateTime ahora= LocalDateTime.now();
-                fecha = Calendar.getInstance().getTime();            
+                movimiento = obj.getInt("movimiento");  
+                if (valorLuz < 50){ //En casod e que haya poca luz se debe encender el enchufe
+                    LocalDateTime ahora= LocalDateTime.now();
+                    fecha = Calendar.getInstance().getTime();            
 
-                HistoricoSensores historico = new HistoricoSensores();
-                historico.setFecha(fecha);
-                historico.setHora(ahora.getHour() + 2 + ":" + ahora.getMinute() + ":" + ahora.getSecond()); // Zona horaria GMT, espanya es GMT + 2
-                historico.setValorSensorLuz(valorLuz);            
-                historico.setValorSensorMovimiento(movimiento);            
+                    HistoricoSensores historico = new HistoricoSensores();
+                    historico.setFecha(fecha);
+                    historico.setHora(ahora.getHour() + 2 + ":" + ahora.getMinute() + ":" + ahora.getSecond()); // Zona horaria GMT, espanya es GMT + 2
+                    historico.setValorSensorLuz(valorLuz);            
+                    historico.setValorSensorMovimiento(movimiento);            
 
-                ws.addHistoricoLuz(historico);
-
+                    ws.addHistoricoLuz(historico);
+                    ws.switchEstadoEnchufe(true);
+                }else{
+                    ws.switchEstadoEnchufe(false);
+                }
+                
+                
+                
             }catch(Exception e){
                 e.printStackTrace();
                 System.out.println("la exce " );

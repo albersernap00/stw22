@@ -79,9 +79,7 @@
                         <tr>
                             <td>
                                 <fieldset>
-                                <!--<form method="POST" id="sonoff" action="">
-                                    <button id="botonON" type="submit" name="comando" value="1" <%=onDisabled%> onclick="pruebaSwitch(value);">ON</button> 
-                                    <button id="botonOFF" type="submit" name="comando" value="0" <%=offDisabled%> onclick="pruebaSwitch(value);">OFF</button> -->
+             
                                     <button id="botonON" type="submit" name="comando" value="1" <%=onDisabled%>  onclick="pruebaSwitch(value);">ON</button> 
                                     <button id="botonOFF" type="submit" name="comando" value="0" <%=offDisabled%> onclick="pruebaSwitch(value);">OFF</button>
                                     
@@ -92,16 +90,26 @@
                             <td>
                                 <canvas id="canvas" style="background-color: <%=color%>"  width="50" height="50"></canvas>
                                 
-                            </td>        
+                            </td>       
+                            
+                            <td>
+                                <fieldset>  
+                                    <legend>Gasto Enchufe (€)</legend>                                    
+                                    <div id="gastoEnchufe">???</div>
+                                </fieldset>
+                                
+                                
+                            </td> 
                         </tr>
                         <tr>
                             <td valign="middle" colspan="2">
                                 <div id="estado">Estado <%=estadoSonoff%> </div>
-                            </td>    
+                            </td>                                 
                         </tr>
                     </table>
                     </fieldset>
                 </td>
+                
             </tr>
             </table>
         </div>

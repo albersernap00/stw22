@@ -177,6 +177,24 @@ public class WebSocketManager {
     public void sendStatusEnchufe(String mensaje) {
         publishMessage(mensaje, "enchufe");
     }
+
+    public void switchEstadoEnchufe(boolean estado) {
+        if (sonoff.getEstado() != estado){
+            if (estado){
+                starter.getMqtt().publish("/stw/stwAR/cmnd/POWER","1" , estado);
+            }else{
+                starter.getMqtt().publish("/stw/stwAR/cmnd/POWER","0" , estado);
+            }
+            sonoff.setEstado(estado);
+        }
+        
+    }
+
+    public void sendCoste(String precio) {
+        System.out.println("[!] El precio que me llega es " + precio);
+        
+        publishMessage(precio, "updateGasto");
+    }
     
 
     
