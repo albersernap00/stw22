@@ -75,6 +75,9 @@ openSocket();
                 document.getElementById("gastoEnchufe").innerHTML = json.values;        
                 
             break;
+            case "sesionesActivas":
+                document.getElementById("usuariosDentro").innerHTML = "Sesiones activas " + json.values;
+            break;
         }
             
         

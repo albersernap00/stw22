@@ -3,28 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stw22.servelt;
+package stw22.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import stw22.db.Usuario;
-import stw22.db.UsuarioDAO;
 
 /**
  *
  * @author rober
  */
-@WebServlet(name = "resetearUsuarios", urlPatterns = {"/resetearUsuarios"})
-public class ResetearUsuarios extends HttpServlet {
-    @EJB UsuarioDAO usuarioDB;
+@WebServlet(name = "cerrarSesion", urlPatterns = {"/cerrarSesion"})
+public class CerrarSesion extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -35,19 +31,10 @@ public class ResetearUsuarios extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            List<Usuario> listaUsuarios = usuarioDB.findAll();
-             
-            for (int i = 0; i < listaUsuarios.size(); i++) {                
-                usuarioDB.remove(listaUsuarios.get(i));
-            }
-            HttpSession session = request.getSession();
-            session.invalidate();
-            response.sendRedirect("login.jsp");
-        }
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("login.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

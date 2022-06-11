@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stw22.timer;
+package stw22.ejb;
 
-import WebSocket.WebSocketManager;
+import stw22.ejb.WebSocket.WebSocketManager;
 import com.google.gson.Gson;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -17,6 +17,8 @@ import stw22.db.GastoEnchufeDAO;
 
 
 import stw22.db.HistoricoSensoresDAO;
+import stw22.ejb.timer.TimerConsultarGasto;
+import stw22.ejb.timer.TimerPrecioLuz;
 import stw22.mqtt.MQTTListener;
 import stw22.mqtt.MQTTManager;
 

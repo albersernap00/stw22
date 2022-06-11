@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stw22.timer;
+package stw22.ejb.timer;
 
 import REST.client.PrecioLuzNowClienteRest;
-import WebSocket.WebSocketManager;
+import stw22.ejb.WebSocket.WebSocketManager;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;

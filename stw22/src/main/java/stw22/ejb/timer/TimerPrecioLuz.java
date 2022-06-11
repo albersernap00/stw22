@@ -1,4 +1,4 @@
-package stw22.timer;
+package stw22.ejb.timer;
 
 import REST.client.LuzClienteRest;
 import com.google.gson.Gson;
@@ -22,6 +22,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import stw22.db.PrecioLuz;
 import stw22.db.PrecioLuzDAO;
+import stw22.ejb.Arrancador;
 import stw22.serializable.PrecioLuzJSON;
 
 /**

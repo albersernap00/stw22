@@ -3,28 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stw22.servelt;
+package stw22.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import stw22.db.PrecioLuz;
-import stw22.db.PrecioLuzDAO;
-import stw22.timer.TimerPrecioLuz;
+import stw22.ejb.timer.TimerPrecioLuz;
 
 /**
  *
  * @author rober
  */
-@WebServlet(name = "listarPrecios", urlPatterns = {"/listarPrecios"})
-public class ListarPrecios extends HttpServlet {
-    @EJB PrecioLuzDAO preciosDB;
+@WebServlet(name = "addPreciosLuz", urlPatterns = {"/addPreciosLuz"})
+public class AddPreciosLuz extends HttpServlet {
     @EJB TimerPrecioLuz timer;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,26 +32,11 @@ public class ListarPrecios extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ListarPrecios</title>");            
-            out.println("</head>"); 
-            out.println("<body>");
-            List<PrecioLuz> lista = preciosDB.findAll();
-            if (lista != null){
-                for(PrecioLuz precio: lista){
-                    out.println("<h3>" + precio.toString() + "</h3>");
-                }
-            }
-           
-            out.println("<h1>Servlet ListarPrecios at " + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        timer.obtenerPrecioLuz();       
+        response.sendRedirect("index.jsp");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -49,25 +49,40 @@
           } 
         %>
         <h1>Hola <%=nombreUsuario%>!</h1>
-        <form action="listarPrecios">
-            <input type="submit" value="Listar">
-        </form>
-        <form action="addPreciosLuz">
-            <input type="submit" value="Añadir precio">
-        </form>
-        <form action="addUsuario">
-            <input type="submit" value="Añadir Usuario">
-        </form>
-        <form action="resetearUsuarios">
-            <input type="submit" value="Resetar usuarios">
-        </form>
-        <form action="cerrarSesion">
-            <input type="submit" value="Cerrar sesión">
-        </form>
-        <h1 id="prueba"></h1>
+        <table>
+            <tr>
+
+                <td>
+                    <form action="addPreciosLuz">
+                        <input type="submit" value="Añadir precio">
+                    </form>
+                </td>                
+                
+                <td>
+                    <form action="cerrarSesion">
+                        <input type="submit" value="Cerrar sesión">
+                    </form>
+                </td>
+                <td>
+                    <h5 id="usuariosDentro">Sesiones activas:: </h5>
+                </td>
+            </tr>
+            <tr>
+                
+            </tr>
+        </table>
         
+        
+        
+        
+        
+        
+        <h3>Selecciona la fecha para obtener el precio de la luz</h3>
         <input type="date" min="2022-05-31" id="datePrecioLuz" onchange="enviarFecha();">
         <div id="graficaPrecios"></div>  
+        <br>
+        <br>
+        <h3>Selecciona la fecha para obtener las veces que se ha encencido el sonoff</h3>
         <input type="date" min="2022-05-31" id="dateGraficaBarras" onchange="enviarFechaHistorico();">
         <div id="graficaBarras"></div>  
        

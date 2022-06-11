@@ -3,27 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stw22.servelt;
+package stw22.servlet;
 
+import REST.client.LoginRESTClient;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import stw22.timer.TimerPrecioLuz;
+import javax.servlet.http.HttpSession;
+import stw22.db.GastoEnchufe;
+import stw22.db.GastoEnchufeDAO;
+import stw22.db.Usuario;
+import stw22.db.UsuarioDAO;
 
 /**
  *
- * @author rober
+ * @author Alberto
  */
-@WebServlet(name = "addPreciosLuz", urlPatterns = {"/addPreciosLuz"})
-public class AddPreciosLuz extends HttpServlet {
-    @EJB TimerPrecioLuz timer;
+@WebServlet(name = "Login", urlPatterns = {"/login"})
+public class Login extends HttpServlet {
+    @EJB GastoEnchufeDAO gastoDB;
+    
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -33,19 +39,31 @@ public class AddPreciosLuz extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            timer.obtenerPrecioLuz();             
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddPreciosLuz</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddPreciosLuz at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        HttpSession session = request.getSession();
+        
+        String username = request.getParameter("username");
+        String pwd      = request.getParameter("pwd");
+               
+        LoginRESTClient client = new LoginRESTClient();        
+        
+        if (client.loginOK(username, pwd).equals("OK")){
+            session.setAttribute("username", username);
+            session.setAttribute("msg", null);
+            GastoEnchufe g = gastoDB.obtenerGastoDia();
+            if (g != null){
+                session.setAttribute("gastoHoy", g.getGasto());
+            }else{
+                session.setAttribute("gastoHoy", 0.0);
+            }
+            
+            response.sendRedirect(response.encodeURL("index.jsp"));
+        }else{
+            session.setAttribute("username", null);
+            session.setAttribute("msg", "ERROR en la autenticación.");            
+            response.sendRedirect(response.encodeURL("login.jsp"));
         }
+        client.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

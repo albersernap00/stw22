@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package WebSocket;
+package stw22.ejb.WebSocket;
 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import stw22.db.HistoricoSensoresDAO;
 import stw22.db.PrecioLuz;
 import stw22.db.PrecioLuzDAO;
 import stw22.ejb.Sonoff;
-import stw22.timer.Arrancador;
+import stw22.ejb.Arrancador;
 
 
 /**
@@ -53,11 +53,14 @@ public class WebSocketManager {
         System.out.println(">>> Session " +_session.getId()+" created");
         
         sessions.add(_session);
+        publishMessage(String.valueOf(sessions.size()), "sesionesActivas");
         
     }
 
     public WebSocketManager() {
     }
+    
+    
     
     @OnMessage
     public String onMessage(Session sesion, String message) {
@@ -113,6 +116,7 @@ public class WebSocketManager {
     public void onClose(Session _session){
         System.out.println("--- Session " +_session.getId()+" has ended");
         sessions.remove(_session);
+        publishMessage(String.valueOf(sessions.size()), "sesionesActivas");
     }
      
      public void destroy(){

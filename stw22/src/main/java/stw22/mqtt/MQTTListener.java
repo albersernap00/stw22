@@ -5,7 +5,7 @@
  */
 package stw22.mqtt;
 
-import WebSocket.WebSocketManager;
+import stw22.ejb.WebSocket.WebSocketManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 import stw22.db.HistoricoSensores;
 import stw22.ejb.Sonoff;
-import stw22.timer.Arrancador;
+import stw22.ejb.Arrancador;
 
 /**
  *
