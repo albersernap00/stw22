@@ -8,6 +8,9 @@
     <class>stw22.mqtt.MQTTManager</class>
     <class>stw22.mqtt.MqttListener</class>
     <class>stw22.db.HistoricoSensores</class>
+    <class>stw22.db.Gasto</class>
+    <class>stw22.db.HistoricoGasto</class>
+    <class>stw22.db.GastoEnchufe</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>

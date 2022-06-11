@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -49,6 +51,7 @@ public class WebSocketManager {
     @OnOpen
     public void onOpen(Session _session){
         System.out.println(">>> Session " +_session.getId()+" created");
+        
         sessions.add(_session);
         
     }
@@ -106,8 +109,28 @@ public class WebSocketManager {
         return message;
     }
     
-
+    @OnClose
+    public void onClose(Session _session){
+        System.out.println("--- Session " +_session.getId()+" has ended");
+        sessions.remove(_session);
+    }
      
+     public void destroy(){
+        System.out.println("xxx WebSockerManager says Bye! ---------------");
+        for (Session s: sessions){
+            try {
+                s.close();
+            } catch (IOException ex) {
+            }
+        }
+        sessions.clear();
+    }
+
+
+    @OnError
+    public void onError(Session _session, Throwable t) {
+        System.out.println("--- ERROR in session " +_session.getId());
+    }
     
     /**
      * Envía el texto "_msg" a todas las sesiones existentes (broadcast)
@@ -174,7 +197,7 @@ public class WebSocketManager {
         }
     }
 
-    public void sendStatusEnchufe(String mensaje) {
+    public void sendStatusEnchufe(String mensaje) {        
         publishMessage(mensaje, "enchufe");
     }
 

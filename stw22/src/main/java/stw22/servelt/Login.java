@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import stw22.db.GastoEnchufe;
+import stw22.db.GastoEnchufeDAO;
 import stw22.db.Usuario;
 import stw22.db.UsuarioDAO;
 
@@ -23,7 +25,7 @@ import stw22.db.UsuarioDAO;
  */
 @WebServlet(name = "Login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
-    
+    @EJB GastoEnchufeDAO gastoDB;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,10 +49,17 @@ public class Login extends HttpServlet {
         if (client.loginOK(username, pwd).equals("OK")){
             session.setAttribute("username", username);
             session.setAttribute("msg", null);
+            GastoEnchufe g = gastoDB.obtenerGastoDia();
+            if (g != null){
+                session.setAttribute("gastoHoy", g.getGasto());
+            }else{
+                session.setAttribute("gastoHoy", 0.0);
+            }
+            
             response.sendRedirect(response.encodeURL("index.jsp"));
         }else{
             session.setAttribute("username", null);
-            session.setAttribute("msg", "ERROR en la autenticación.");
+            session.setAttribute("msg", "ERROR en la autenticación.");            
             response.sendRedirect(response.encodeURL("login.jsp"));
         }
         client.close();

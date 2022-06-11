@@ -40,6 +40,7 @@
     <body>
         <%
           String nombreUsuario = (String)session.getAttribute("username");
+          Double gastoHoy = (Double) session.getAttribute("gastoHoy");
           if (nombreUsuario==null){
             session.setAttribute("msg", "ERROR: La sesión ha caducado.");
         %>
@@ -64,6 +65,7 @@
             <input type="submit" value="Cerrar sesión">
         </form>
         <h1 id="prueba"></h1>
+        
         <input type="date" min="2022-05-31" id="datePrecioLuz" onchange="enviarFecha();">
         <div id="graficaPrecios"></div>  
         <input type="date" min="2022-05-31" id="dateGraficaBarras" onchange="enviarFechaHistorico();">
@@ -95,7 +97,7 @@
                             <td>
                                 <fieldset>  
                                     <legend>Gasto Enchufe (€)</legend>                                    
-                                    <div id="gastoEnchufe">???</div>
+                                    <div id="gastoEnchufe"><%=gastoHoy%></div>
                                 </fieldset>
                                 
                                 

@@ -105,6 +105,7 @@ public void publish(String _topic, String _msg, boolean retain){
                     
                     mqttClient.connect(mqttOptions);
                 } catch (MqttException ex) {
+                    System.out.println("EXCEPCION CONECTANDO BROKER");
                     Logger.getLogger(MQTTManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -120,6 +121,7 @@ public void publish(String _topic, String _msg, boolean retain){
                 mqttClient.disconnect();
                 mqttClient.close();
             } catch (MqttException ex) {
+                System.out.println("VOY A CERRAR LA CONEXION EN CLOSE");
                 Logger.getLogger(MQTTManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

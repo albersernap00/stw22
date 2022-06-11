@@ -26,9 +26,7 @@ import stw22.timer.Arrancador;
  * @author rober
  */
 public class MQTTListener implements MqttCallbackExtended {
-    
-    
-            
+                    
     
     private WebSocketManager ws;
     
@@ -45,12 +43,18 @@ public class MQTTListener implements MqttCallbackExtended {
     public void connectionLost(Throwable thrwbl) {
         System.out.println("[!] Connection lost " + thrwbl.getMessage());
     }
+    
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken imdt) {
+        System.out.println("[!] Delivery Complete");
+    }
 
     @Override
     public void messageArrived(String string, MqttMessage mm)  {
         //Cuando llegue un mensaje quieres comprobar si encender ele nchufe
         // Y ademas mandarlo a la GUI por ws
         // Y si es el sensor de luz/movimiento meterlo en la BD --> JPA de historico?
+        System.out.println("ME HA LLEGADO AQUI del topic " + string + " el mensaje " + mm.toString());
         if(string.equals(Arrancador.TOPIC_ENCHUFE)){
             ws.sendStatusEnchufe(mm.toString());
             System.out.println("En el mqtt arrived tengo " + mm.toString());
@@ -97,9 +101,6 @@ public class MQTTListener implements MqttCallbackExtended {
                
     }
 
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken imdt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
 }

@@ -12,7 +12,10 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import stw22.db.HistoricoSensores;
+import stw22.db.GastoEnchufe;
+import stw22.db.GastoEnchufeDAO;
+
+
 import stw22.db.HistoricoSensoresDAO;
 import stw22.mqtt.MQTTListener;
 import stw22.mqtt.MQTTManager;
@@ -27,7 +30,10 @@ public class Arrancador {
     
     @EJB TimerPrecioLuz timer;
     @EJB WebSocketManager ws;
-    @EJB HistoricoSensoresDAO hs;
+    @EJB HistoricoSensoresDAO hs;    
+    @EJB GastoEnchufeDAO gastoDB;
+    @EJB TimerConsultarGasto timerGasto;
+  
     public static final String TOPIC_ENCHUFE = "/stw/stwAR/cmnd/POWER";  
     public static final String TOPIC_SENSOR_LUZ = "/stw/stwAR/sensores/luz";   
     
@@ -62,13 +68,23 @@ public class Arrancador {
         System.out.println("sssssss"  + hs.findAll());
         //System.out.println("EL TAMANYU es " + hs.getHistoricoSensoresHora("22"));
         
+        GastoEnchufe g = gastoDB.obtenerGastoDia();
+        if(g != null){
+            timerGasto.setTiempo(g.getTiempo());
+        }else{
+            System.out.println("no hago nada");
+        }
         
         System.out.println("[!] TERMINA LO BUENO");
+        
+        
         
     }
     
     @PreDestroy
     public void bye(){
+        System.out.println("ADIOS");
+        
         ws = null;
         if (mqttManager != null){
             mqttManager.close();
