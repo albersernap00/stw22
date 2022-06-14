@@ -86,6 +86,7 @@ public void publish(String _topic, String _msg, boolean retain){
     public boolean connectBroker(String _user, String _password, String _broker){
         if(mqttClient == null){
             try {
+
                  mqttClient = new MqttClient(_broker, "ra" + cont++, persistence);
             
             } catch (MqttException ex) {
@@ -97,6 +98,7 @@ public void publish(String _topic, String _msg, boolean retain){
             
             if (!mqttClient.isConnected()){
                 try {
+                    System.out.println("[!!] Voy a intentar conectar el MQTT con user " + _user + " pass " + _password + " y broker " + _broker);
                     MqttConnectOptions mqttOptions = new MqttConnectOptions();
                     mqttOptions.setUserName(_user);
                     mqttOptions.setPassword(_password.toCharArray());

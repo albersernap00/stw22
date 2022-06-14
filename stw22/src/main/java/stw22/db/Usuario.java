@@ -77,7 +77,9 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "stw22.db.Usuario[ id=" + id + " ]";
+        return "Usuario{" + "id=" + id + ", nombreUsuario=" + nombreUsuario + ", password=" + password + '}';
     }
+
+    
     
 }

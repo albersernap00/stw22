@@ -41,9 +41,10 @@ public class Arrancador {
     
     public static final String TOPIC_SENSOR_MOVIMIENTO = "/stw/stwAR/sensores/movimiento";
     
-    public static final String HOST = "tcp://192.168.1.68";
-    public static final String USER = "";
-    public static final String PASSWORD = "";
+    //public static final String HOST = "tcp://192.168.1.68";
+    public static final String HOST = "tcp://155.210.71.106";
+    public static final String USER = "stw";
+    public static final String PASSWORD = "stweb22";
     
     
     
