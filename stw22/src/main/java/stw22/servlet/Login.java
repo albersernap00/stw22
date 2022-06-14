@@ -21,7 +21,7 @@ import stw22.db.UsuarioDAO;
 
 /**
  *
- * @author Alberto
+ * @author Alberto Serna
  */
 @WebServlet(name = "Login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {

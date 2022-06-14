@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author rober
+ * @author Alberto Serna
  */
 public class LoginRESTClient {
 

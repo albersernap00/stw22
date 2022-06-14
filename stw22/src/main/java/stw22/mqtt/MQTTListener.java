@@ -23,7 +23,7 @@ import stw22.ejb.Arrancador;
 
 /**
  *
- * @author rober
+ * @author Roberto Jiménez
  */
 public class MQTTListener implements MqttCallbackExtended {
                     

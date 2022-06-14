@@ -17,7 +17,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author rober
+ * @author Robeto Jiménez 
  */
 @Stateless
 public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {

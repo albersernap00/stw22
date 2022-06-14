@@ -17,7 +17,7 @@ import stw22.ejb.timer.TimerPrecioLuz;
 
 /**
  *
- * @author rober
+ * @author Alberto Serna
  */
 @WebServlet(name = "addPreciosLuz", urlPatterns = {"/addPreciosLuz"})
 public class AddPreciosLuz extends HttpServlet {

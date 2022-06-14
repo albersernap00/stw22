@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author rober
+ * @author Robeto Jiménez 
  */
 @Entity
 public class Usuario implements Serializable {

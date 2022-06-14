@@ -18,7 +18,7 @@ import stw22.ejb.Sonoff;
 
 /**
  *
- * @author rober
+ * @author Alberto Serna
  */
 @Stateless
 public class TimerConsultarGasto {

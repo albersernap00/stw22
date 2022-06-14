@@ -18,7 +18,7 @@ import javax.ws.rs.client.WebTarget;
  *        // do whatever with response
  *        client.close();
  * </pre>
- *
+ * @author Alberto Serna
  */
 public class LuzClienteRest {
 

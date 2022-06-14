@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author rober
+ * @author Alberto Serna
  */
 @Stateless
 public class Sonoff {

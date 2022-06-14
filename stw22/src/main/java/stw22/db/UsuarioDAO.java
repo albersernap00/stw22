@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author rober
+ * @author Robeto Jiménez
  */
 @Stateless
 public class UsuarioDAO extends AbstractFacade<Usuario> {

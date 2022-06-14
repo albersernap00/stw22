@@ -7,7 +7,7 @@ package stw22.serializable;
 
 /**
  *
- * @author rober
+ * @author Roberto Jiménez
  */
 public class PrecioLuzJSON {
     private String date;

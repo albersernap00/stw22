@@ -24,7 +24,7 @@ import stw22.db.UsuarioDAO;
 /**
  * REST Web Service
  *
- * @author rober
+ * @author Alberto Serna
  */
 @Path("login")
 @RequestScoped

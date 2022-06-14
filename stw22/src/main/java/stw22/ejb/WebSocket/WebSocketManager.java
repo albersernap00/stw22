@@ -34,7 +34,7 @@ import stw22.ejb.Arrancador;
 
 /**
  *
- * @author rober
+ * @author Roberto Jiménez
  */
 
 @ServerEndpoint("/stw")

@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author rober
+ * @author Robeto Jiménez
  */
 @Stateless
 public class GastoEnchufeDAO extends AbstractFacade<GastoEnchufe> {

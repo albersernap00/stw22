@@ -18,7 +18,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
  *
- * @author rober
+ * @author Roberto Jiménez
  */
 public class MQTTManager {
     

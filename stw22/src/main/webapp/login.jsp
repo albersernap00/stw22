@@ -1,7 +1,7 @@
 <%-- 
     Document   : login
     Created on : 31 may. 2022, 16:23:43
-    Author     : Alberto
+    Author     : Roberto Jiménez y Alberto Serna
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

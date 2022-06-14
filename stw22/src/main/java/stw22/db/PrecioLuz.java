@@ -14,7 +14,7 @@ import javax.persistence.Id;
 
 /**
  *
- * @author rober
+ * @author Robeto Jiménez
  */
 @Entity
 public class PrecioLuz implements Serializable {

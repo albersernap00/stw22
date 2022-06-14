@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author rober
+ * @author Robeto Jiménez
  */
 @Stateless
 public class HistoricoSensoresDAO extends AbstractFacade<HistoricoSensores> {

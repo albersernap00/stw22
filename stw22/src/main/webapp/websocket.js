@@ -1,6 +1,10 @@
 var wsUri = "ws://" + document.location.host + "/stw22/stw";
 var webSocket;
 
+/**
+ *  Roberto Jiménez
+ */
+
 var titulo = document.getElementById("prueba");
 var provinciaSelect = document.getElementById("provinciaSelect");
 var municipioSelect = document.getElementById("municipioSelect");

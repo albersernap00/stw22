@@ -27,7 +27,7 @@ import stw22.serializable.PrecioLuzJSON;
 
 /**
  *
- * @author rober
+ * @author Alberto Serna
  */
 @Stateless
 

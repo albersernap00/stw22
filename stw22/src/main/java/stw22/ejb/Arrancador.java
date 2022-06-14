@@ -24,7 +24,7 @@ import stw22.mqtt.MQTTManager;
 
 /**
  * java beans => sessions bean 
- * @author rober
+ * @author Alberto Serna y Roberto Jiménez
  */
 @Singleton
 @Startup

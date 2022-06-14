@@ -21,7 +21,7 @@ import stw22.db.PrecioLuzDAO;
 /**
  * REST Web Service
  *
- * @author rober
+ * @author Alberto Serna
  */
 @Path("priceLuz")
 @RequestScoped
